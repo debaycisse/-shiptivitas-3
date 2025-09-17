@@ -25,15 +25,18 @@ FROM (
 );
 
 
+
+
+
+
 -- PART 2: Create a SQL query that indicates the number of status changes by card
 
-SELECT COUNT(new_status_count)
+SELECT SUM(new_status_count)
 FROM (
-  SELECT
-    COUNT(newStatus) AS new_status_count,
-    DATE(timestamp, 'unixepoch') AS change_date,
-    cardID
+  SELECT 
+    cardID,
+    COUNT(newStatus) AS new_status_count
   FROM card_change_history
-  WHERE change_date >= '2018-06-02'
+  WHERE DATE(timestamp, 'unixepoch') >= '2018-06-02'
   GROUP BY cardID
 );
